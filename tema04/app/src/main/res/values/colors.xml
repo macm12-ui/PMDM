@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="franja1">#E53935</color>
+    <color name="franja2">#43A047</color>
+    <color name="franja3">#1E88E5</color>
+    <color name="gris1">#546E7A</color>
+    <color name="gris2">#B0BEC5</color>
+</resources>
