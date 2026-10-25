@@ -16,6 +16,8 @@ import com.google.android.material.materialswitch.MaterialSwitch;
 
 public class MainActivity extends AppCompatActivity {
 
+    private int intentosFallidos = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +68,16 @@ public class MainActivity extends AppCompatActivity {
                 mensaje.setTextColor(getColor(R.color.verde));
 
             } else {
-                mensaje.setText("Usuario y/o contraseña incorrectos");
+                intentosFallidos++;
+
+                mensaje.setText("Usuario y/o contraseña incorrectos. Intento "
+                        + intentosFallidos + " de 3");
                 mensaje.setTextColor(getColor(R.color.rojo));
+
+                if (intentosFallidos >= 3) {
+                    continuar.setEnabled(false);
+                    mensaje.setText("Has superado los 3 intentos. Botón desactivado");
+                }
             }
         });
     }
