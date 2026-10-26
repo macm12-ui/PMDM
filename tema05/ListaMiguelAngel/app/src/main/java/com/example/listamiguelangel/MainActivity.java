@@ -23,6 +23,23 @@ public class MainActivity extends AppCompatActivity {
 
         videojuegos = new ArrayList<>();
 
+        videojuegos.add(new Videojuego("Minecraft", "PC",
+                R.drawable.minecraft));
+        videojuegos.add(new Videojuego("The Legend of Zelda", "Nintendo Switch",
+                R.drawable.saga_the_legend_of_zelda));
+        videojuegos.add(new Videojuego("Super Mario Kart 8 Deluxe", "Nintendo Switch",
+                R.drawable.mariokart));
+        videojuegos.add(new Videojuego("Fortnite", "PC",
+                R.drawable.fortnite));
+        videojuegos.add(new Videojuego("GTA V", "PC",
+                R.drawable.gtav));
+        videojuegos.add(new Videojuego("FIFA", "PlayStation",
+                R.drawable.fifa));
+        videojuegos.add(new Videojuego("Pokémon", "Nintendo Switch",
+                R.drawable.pokemon));
+        videojuegos.add(new Videojuego("Dead by Daylight", "PC",
+                R.drawable.dbd));
+
         listaVideojuegos.setLayoutManager(new LinearLayoutManager(this));
 
         adaptador = new VideojuegoAdapter(videojuegos, this);
