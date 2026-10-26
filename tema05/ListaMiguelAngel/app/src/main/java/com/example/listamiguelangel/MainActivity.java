@@ -3,6 +3,7 @@ package com.example.listamiguelangel;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,7 +41,13 @@ public class MainActivity extends AppCompatActivity {
         videojuegos.add(new Videojuego("Dead by Daylight", "PC",
                 R.drawable.dbd));
 
-        listaVideojuegos.setLayoutManager(new LinearLayoutManager(this));
+        listaVideojuegos.setLayoutManager(
+                new LinearLayoutManager(this));
+
+        // Añadir separadores entre los videojuegos
+        listaVideojuegos.addItemDecoration(
+                new DividerItemDecoration(
+                        this, LinearLayoutManager.VERTICAL));
 
         adaptador = new VideojuegoAdapter(videojuegos, this);
         listaVideojuegos.setAdapter(adaptador);
