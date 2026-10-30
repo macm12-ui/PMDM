@@ -1,6 +1,8 @@
 package com.example.te;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -20,5 +22,13 @@ public class MenuActivity extends AppCompatActivity {
 
         TextView txtSaludo = findViewById(R.id.txtSaludo);
         txtSaludo.setText("Hola, " + correo);
+
+        Button btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
+
+        btnCerrarSesion.setOnClickListener(v -> {
+            Intent intent = new Intent(MenuActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
 }
