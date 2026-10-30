@@ -3,4 +3,10 @@
     <string name="menu_principal">Menú principal</string>
     <string name="saludo">Hola</string>
     <string name="cerrar_sesion">Cerrar sesión</string>
+    <string name="correo_electronico">Correo electrónico</string>
+    <string name="introduce_correo">Introduce tu correo</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="introduce_contrasena">Introduce tu contraseña</string>
+    <string name="recordar_contrasena">Recordar contraseña</string>
+    <string name="continuar">Continuar</string>
 </resources>
