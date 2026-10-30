@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">LoginMiguelAngel</string>
+    <string name="correo_electronico">Correo electrónico</string>
+    <string name="introduce_correo">Introduce tu correo electrónico</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="introduce_contrasena">Introduce tu contraseña</string>
+    <string name="recordar_contrasena">Recordar contraseña</string>
+    <string name="continuar">Continuar</string>
+</resources>
