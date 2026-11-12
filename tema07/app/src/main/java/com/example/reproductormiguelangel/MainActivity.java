@@ -119,4 +119,32 @@ public class MainActivity extends AppCompatActivity {
         return String.format(Locale.getDefault(), "%02d:%02d",
                 segundos / 60, segundos % 60);
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        handler.removeCallbacks(actualizarBarra);
+        handler.post(actualizarBarra);
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (player != null) {
+            player.pause();
+        }
+
+        handler.removeCallbacks(actualizarBarra);
+    }
+    @Override
+    protected void onDestroy() {
+        handler.removeCallbacks(actualizarBarra);
+
+        if (player != null) {
+            player.release();
+            player = null;
+        }
+
+        super.onDestroy();
+    }
 }
