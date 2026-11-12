@@ -7,6 +7,8 @@ import android.os.Looper;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.media.AudioAttributes;
+import android.media.SoundPool;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.media3.common.C;
 import androidx.media3.common.MediaItem;
@@ -20,9 +22,17 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar seekBar;
     private TextView txtTiempoActual;
     private TextView txtDuracion;
-
+    private SoundPool soundPool;
+    private int sonidoCampana;
+    private int sonidoAplausos;
+    private int sonidoLaser;
+    private int sonidoExplosion;
+    private int sonidosCargados = 0;
+    private Button btnCampana;
+    private Button btnAplausos;
+    private Button btnLaser;
+    private Button btnExplosion;
     private Handler handler = new Handler(Looper.getMainLooper());
-
     private Runnable actualizarBarra = new Runnable() {
         @Override
         public void run() {
@@ -46,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
         seekBar = findViewById(R.id.seekBar);
         txtTiempoActual = findViewById(R.id.txtTiempoActual);
         txtDuracion = findViewById(R.id.txtDuracion);
+        btnCampana = findViewById(R.id.btnCampana);
+        btnAplausos = findViewById(R.id.btnAplausos);
+        btnLaser = findViewById(R.id.btnLaser);
+        btnExplosion = findViewById(R.id.btnExplosion);
 
         player = new ExoPlayer.Builder(this).build();
 
@@ -53,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
         player.setMediaItem(MediaItem.fromUri(uri));
         player.prepare();
-
         player.addListener(new Player.Listener() {
             @Override
             public void onPlaybackStateChanged(int playbackState) {
@@ -65,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                         txtDuracion.setText(formatoTiempo(duracion));
                     }
                 }
-
                 if (playbackState == Player.STATE_ENDED) {
                     actualizarProgreso();
                 }
@@ -75,12 +87,10 @@ public class MainActivity extends AppCompatActivity {
             if (player.getPlaybackState() == Player.STATE_ENDED) {
                 player.seekTo(0);
             }
-
             player.play();
             handler.removeCallbacks(actualizarBarra);
             handler.post(actualizarBarra);
         });
-
         btnPausa.setOnClickListener(v -> {
             player.pause();
             handler.removeCallbacks(actualizarBarra);
@@ -90,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 handler.removeCallbacks(actualizarBarra);
@@ -104,6 +113,41 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        configurarSonidos();
+    }
+    private void configurarSonidos() {
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
+        soundPool = new SoundPool.Builder()
+                .setMaxStreams(4)
+                .setAudioAttributes(audioAttributes)
+                .build();
+        soundPool.setOnLoadCompleteListener((soundPool, sampleId, status) -> {
+            if (status == 0) {
+                sonidosCargados++;
+                if (sonidosCargados == 4) {
+                    btnCampana.setEnabled(true);
+                    btnAplausos.setEnabled(true);
+                    btnLaser.setEnabled(true);
+                    btnExplosion.setEnabled(true);
+                }
+            }
+        });
+        sonidoCampana = soundPool.load(this, R.raw.campana, 1);
+        sonidoAplausos = soundPool.load(this, R.raw.aplausos, 1);
+        sonidoLaser = soundPool.load(this, R.raw.laser, 1);
+        sonidoExplosion = soundPool.load(this, R.raw.explosion, 1);
+        btnCampana.setOnClickListener(v ->
+                soundPool.play(sonidoCampana, 1, 1, 1, 0, 1));
+        btnAplausos.setOnClickListener(v ->
+                soundPool.play(sonidoAplausos, 1, 1, 1, 0, 1));
+        btnLaser.setOnClickListener(v ->
+                soundPool.play(sonidoLaser, 1, 1, 1, 0, 1));
+        btnExplosion.setOnClickListener(v ->
+                soundPool.play(sonidoExplosion, 1, 1, 1, 0, 1));
     }
     private void actualizarProgreso() {
         if (player != null) {
@@ -143,6 +187,11 @@ public class MainActivity extends AppCompatActivity {
         if (player != null) {
             player.release();
             player = null;
+        }
+
+        if (soundPool != null) {
+            soundPool.release();
+            soundPool = null;
         }
 
         super.onDestroy();
