@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">ReproductorMiguelÁngel</string>
-    <string name="titulo_cancion">Mi canción</string>
-    <string name="autor_cancion">Mi artista</string>
-    <string name="tiempo_inicial">00:00</string>
-    <string name="play">Play</string>
-    <string name="pausa">Pausa</string>
-
-</resources>
